@@ -84,9 +84,12 @@ namespace Scienticfic_Calculator
         private void btnSqrt_Click(object sender, EventArgs e)
         {
             countNgoacDon++;
-            if (txtScreen.Text.EndsWith(" ")||txtScreen.Text==""||txtScreen.Text=="0")
+            if (txtScreen.Text.EndsWith(" ")||txtScreen.Text=="" || txtScreen.Text.EndsWith("^"))
             {
                 txtScreen.Text = txtScreen.Text + " √(";
+            }else if(txtScreen.Text.Equals("0"))
+            {
+                txtScreen.Text = " √(";
             }
         }
 

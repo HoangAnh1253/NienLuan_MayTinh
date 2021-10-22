@@ -20,6 +20,19 @@ namespace Scienticfic_Calculator
             //    string tempStr = getBieuThucOf(bieuThuc, "√").ToString();
             //    bieuThuc = bieuThuc.Replace("√" + tempStr, Math.Sqrt(compute(tempStr)).ToString());
             //}
+            //Xu ly dau ^
+            while (bieuThuc.Contains("^"))
+            {
+                string veTrc = getBieuThucTruocViTri(bieuThuc, bieuThuc.IndexOf("^")),
+                       veSau = getBieuThucSauViTri(bieuThuc, bieuThuc.IndexOf("^"));
+                Console.WriteLine(veTrc + "^" + veSau);
+                string tempStr = veTrc + "^" + veSau;
+                double numOfVeTrc = Convert.ToDouble(compute(veTrc)),
+                       numOfVeSau = Convert.ToDouble(compute(veSau));
+                bieuThuc = bieuThuc.Replace(tempStr, Math.Pow(numOfVeTrc, numOfVeSau).ToString());
+                Console.WriteLine(bieuThuc);
+            }
+         
             //Xu ly cac bieu thuc √,sin,...
             String firstSymbol;
             do
@@ -31,7 +44,6 @@ namespace Scienticfic_Calculator
                     bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
                 }
             } while (!firstSymbol.Equals(""));
-            
 
             
             v = dt.Compute(bieuThuc, "");
@@ -93,7 +105,7 @@ namespace Scienticfic_Calculator
         public static string getBieuThucTruocViTri(string bieuThuc, int index)
         {
             string kq="";
-            if (Regex.IsMatch(bieuThuc[index-1].ToString(), @"^\d+$"))//Neu bieu thuc phia truoc la so
+            if (Regex.IsMatch(bieuThuc[index-1].ToString(), @"[\d]"))//Neu bieu thuc phia truoc la so
             {
                 Stack<char> num = new Stack<char>();
                 index--;
@@ -102,7 +114,7 @@ namespace Scienticfic_Calculator
                     
                     num.Push(bieuThuc[index]);
                     index--;
-                } while (index>=0 && bieuThuc[index] != ' ');
+                } while (index>=0 && Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]"));
                 while(num.Count!=0)
                 {
                     kq = kq + num.Pop();
@@ -134,14 +146,14 @@ namespace Scienticfic_Calculator
         {
             string kq="";
             Queue<char> num = new Queue<char>();
-            if (Regex.IsMatch(bieuThuc[index + 1].ToString(), @"^\d+$"))//Bieu thuc dung sau la so
+            if (Regex.IsMatch(bieuThuc[index + 1].ToString(), @"[\d]"))//Bieu thuc dung sau la so
             {
                 index++;
                 do
                 {
                     num.Enqueue(bieuThuc[index]);
                     index++;
-                } while (index < bieuThuc.Length && bieuThuc[index] != ' ');
+                } while (index < bieuThuc.Length && Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]"));
                 while (num.Count != 0)
                 {
                     kq = kq + num.Dequeue();
