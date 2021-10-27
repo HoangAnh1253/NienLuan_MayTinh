@@ -83,8 +83,9 @@ namespace Scienticfic_Calculator
 
         private void btnSqrt_Click(object sender, EventArgs e)
         {
+            
             countNgoacDon++;
-            if (txtScreen.Text.EndsWith(" ")||txtScreen.Text=="" || txtScreen.Text.EndsWith("^"))
+            if (txtScreen.Text.EndsWith(" ")||txtScreen.Text=="" || txtScreen.Text.EndsWith("^") || txtScreen.Text.EndsWith("("))
             {
                 txtScreen.Text = txtScreen.Text + " √(";
             }else if(txtScreen.Text.Equals("0"))
@@ -95,6 +96,8 @@ namespace Scienticfic_Calculator
 
         private void btnMoNgoacDon_Click(object sender, EventArgs e)
         {
+            if (txtScreen.Text == "0")
+                txtScreen.Text = "";
             countNgoacDon++;
             if (txtScreen.Text.EndsWith(" ") || txtScreen.Text == "" || txtScreen.Text == "0")
             {
@@ -104,7 +107,7 @@ namespace Scienticfic_Calculator
 
         private void btnDongNgoacDon_Click(object sender, EventArgs e)
         {
-            if(countNgoacDon>0)
+            if (countNgoacDon>0)
             {
                 txtScreen.Text = txtScreen.Text + ")";
                 countNgoacDon--;
@@ -113,9 +116,32 @@ namespace Scienticfic_Calculator
 
         private void btnPow_Click(object sender, EventArgs e)
         {
+         
             if ((txtScreen.Text.EndsWith(")") || !txtScreen.Text.EndsWith(" "))&&!txtScreen.Text.EndsWith("(")&& !txtScreen.Text.Equals("") && ! txtScreen.Text.EndsWith("^"))
             {
                 txtScreen.Text = txtScreen.Text + "^";
+            }
+        }
+
+        private void btnGiaiThua_Click(object sender, EventArgs e)
+        {
+           
+            if ((txtScreen.Text.EndsWith(")") || !txtScreen.Text.EndsWith(" ")) && !txtScreen.Text.EndsWith("(") && !txtScreen.Text.Equals("") && !txtScreen.Text.EndsWith("^"))
+            {
+                txtScreen.Text = txtScreen.Text + "!";
+            }
+        }
+
+        private void btnLogarit_Click(object sender, EventArgs e)
+        {
+            countNgoacDon++;
+            if (txtScreen.Text.EndsWith(" ") || txtScreen.Text == "" || txtScreen.Text.EndsWith("^") || txtScreen.Text.EndsWith("("))
+            {
+                txtScreen.Text = txtScreen.Text + " log(";
+            }
+            else if (txtScreen.Text.Equals("0"))
+            {
+                txtScreen.Text = " log(";
             }
         }
     }

@@ -15,17 +15,28 @@ namespace Scienticfic_Calculator
             double kq = 0;
             DataTable dt = new DataTable();
             Object v;
-            //if (bieuThuc.Contains("√"))
-            //{
-            //    string tempStr = getBieuThucOf(bieuThuc, "√").ToString();
-            //    bieuThuc = bieuThuc.Replace("√" + tempStr, Math.Sqrt(compute(tempStr)).ToString());
-            //}
+            //Xu ly dau !
+            while (bieuThuc.Contains("!"))
+            {
+                string veTrc = getBieuThucTruocViTri(bieuThuc, bieuThuc.IndexOf("!"));
+                string tempStr = veTrc + "!";
+                double numOfVeTrc = Convert.ToDouble(compute(veTrc));
+                if (isInt(numOfVeTrc))
+                {
+                    bieuThuc = bieuThuc.Replace(tempStr, factorial(Convert.ToInt32(numOfVeTrc)).ToString());
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Biểu thức trước dấu ! phải có giá trị là số nguyên");
+                    return 0;
+                }
+
+            }
             //Xu ly dau ^
             while (bieuThuc.Contains("^"))
             {
                 string veTrc = getBieuThucTruocViTri(bieuThuc, bieuThuc.IndexOf("^")),
                        veSau = getBieuThucSauViTri(bieuThuc, bieuThuc.IndexOf("^"));
-                Console.WriteLine(veTrc + "^" + veSau);
                 string tempStr = veTrc + "^" + veSau;
                 double numOfVeTrc = Convert.ToDouble(compute(veTrc)),
                        numOfVeSau = Convert.ToDouble(compute(veSau));
@@ -33,15 +44,19 @@ namespace Scienticfic_Calculator
                 Console.WriteLine(bieuThuc);
             }
          
-            //Xu ly cac bieu thuc √,sin,...
+            
+            //Xu ly cac bieu thuc √, sin, logarit...
             String firstSymbol;
             do
             {
                 firstSymbol = getFirstSymbolOf(bieuThuc);
                 if (!firstSymbol.Equals(""))
-                {
+                {   
                     string tempStr = getBieuThucOf(bieuThuc, firstSymbol);
-                    bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
+                    if(firstSymbol.Equals("√"))
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
+                    else if(firstSymbol.Equals("log"))
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log10(compute(tempStr)).ToString());
                 }
             } while (!firstSymbol.Equals(""));
 
@@ -80,10 +95,12 @@ namespace Scienticfic_Calculator
         {
             string symbol="";
             int sqrtIndex = bieuThuc.IndexOf("√"),
-                sinIndex = bieuThuc.IndexOf("Sin");
+                sinIndex = bieuThuc.IndexOf("Sin"),
+                logIndex = bieuThuc.IndexOf("log");
             List<int> indexList = new List<int>();
             indexList.Add(sqrtIndex);
             indexList.Add(sinIndex);
+            indexList.Add(logIndex);
             for (int i = 0; i < indexList.Count; i++)
             {
                 if (indexList[i] < 0)
@@ -99,6 +116,8 @@ namespace Scienticfic_Calculator
                 symbol = "√";
             else if (indexList[0] == sinIndex)
                 symbol = "Sin";
+            else if (indexList[0] == logIndex)
+                symbol = "log";
             return symbol;
         }
 
@@ -111,10 +130,9 @@ namespace Scienticfic_Calculator
                 index--;
                 do
                 {
-                    
                     num.Push(bieuThuc[index]);
                     index--;
-                } while (index>=0 && Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]"));
+                } while (index>=0 && (Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]") ||  bieuThuc[index] == '.'));
                 while(num.Count!=0)
                 {
                     kq = kq + num.Pop();
@@ -153,7 +171,7 @@ namespace Scienticfic_Calculator
                 {
                     num.Enqueue(bieuThuc[index]);
                     index++;
-                } while (index < bieuThuc.Length && Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]"));
+                } while (index < bieuThuc.Length && (Regex.IsMatch(bieuThuc[index].ToString(), @"[\d]") || bieuThuc[index]=='.'));
                 while (num.Count != 0)
                 {
                     kq = kq + num.Dequeue();
@@ -204,6 +222,24 @@ namespace Scienticfic_Calculator
                 }
             }
             return kq;
+        }
+
+        public static double factorial(int number)
+        {
+            if (number == 1)
+                return 1;
+            else
+                return number * factorial(number - 1);
+        }
+
+        public static bool isInt (double x)
+        {
+            bool isInteger = false;
+            if (x==Convert.ToInt32(x))
+            {
+                isInteger = true;
+            }
+            return isInteger;
         }
     }
 }

@@ -20,8 +20,7 @@ namespace Scienticfic_Calculator
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
             String str = "S2^2";
-            MessageBox.Show(Compute.compute("2+√(1+√(9))*2").ToString()+Compute.getBieuThucTruocViTri(str,str.IndexOf("^")) + "^" + Compute.getBieuThucSauViTri(str, str.IndexOf("^")));
-
+            MessageBox.Show(Compute.compute("log(100)").ToString());
             MessageBox.Show(v.ToString());
             Application.Run(new Calculator());
         }
