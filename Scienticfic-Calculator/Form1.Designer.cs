@@ -61,6 +61,11 @@
             this.btnAnswer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Calculator_label = new System.Windows.Forms.Label();
+            this.btnDecimal = new System.Windows.Forms.Button();
+            this.btnBinary = new System.Windows.Forms.Button();
+            this.btnHexaDecimal = new System.Windows.Forms.Button();
+            this.btnOctal = new System.Windows.Forms.Button();
+            this.btnLn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -430,11 +435,71 @@
             this.Calculator_label.TabIndex = 0;
             this.Calculator_label.Text = "Scientific Calculator";
             // 
+            // btnDecimal
+            // 
+            this.btnDecimal.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDecimal.Location = new System.Drawing.Point(67, 163);
+            this.btnDecimal.Name = "btnDecimal";
+            this.btnDecimal.Size = new System.Drawing.Size(50, 50);
+            this.btnDecimal.TabIndex = 46;
+            this.btnDecimal.Text = "Dec";
+            this.btnDecimal.UseVisualStyleBackColor = true;
+            this.btnDecimal.Click += new System.EventHandler(this.number_convert_click);
+            // 
+            // btnBinary
+            // 
+            this.btnBinary.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBinary.Location = new System.Drawing.Point(123, 163);
+            this.btnBinary.Name = "btnBinary";
+            this.btnBinary.Size = new System.Drawing.Size(50, 50);
+            this.btnBinary.TabIndex = 47;
+            this.btnBinary.Text = "Bin";
+            this.btnBinary.UseVisualStyleBackColor = true;
+            this.btnBinary.Click += new System.EventHandler(this.number_convert_click);
+            // 
+            // btnHexaDecimal
+            // 
+            this.btnHexaDecimal.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHexaDecimal.Location = new System.Drawing.Point(180, 163);
+            this.btnHexaDecimal.Name = "btnHexaDecimal";
+            this.btnHexaDecimal.Size = new System.Drawing.Size(50, 50);
+            this.btnHexaDecimal.TabIndex = 47;
+            this.btnHexaDecimal.Text = "Hex";
+            this.btnHexaDecimal.UseVisualStyleBackColor = true;
+            this.btnHexaDecimal.Click += new System.EventHandler(this.number_convert_click);
+            // 
+            // btnOctal
+            // 
+            this.btnOctal.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOctal.Location = new System.Drawing.Point(236, 163);
+            this.btnOctal.Name = "btnOctal";
+            this.btnOctal.Size = new System.Drawing.Size(50, 50);
+            this.btnOctal.TabIndex = 47;
+            this.btnOctal.Text = "Oct";
+            this.btnOctal.UseVisualStyleBackColor = true;
+            this.btnOctal.Click += new System.EventHandler(this.number_convert_click);
+            // 
+            // btnLn
+            // 
+            this.btnLn.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLn.Location = new System.Drawing.Point(12, 163);
+            this.btnLn.Name = "btnLn";
+            this.btnLn.Size = new System.Drawing.Size(50, 50);
+            this.btnLn.TabIndex = 48;
+            this.btnLn.Text = "ln";
+            this.btnLn.UseVisualStyleBackColor = true;
+            this.btnLn.Click += new System.EventHandler(this.math_function_clicked);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(299, 562);
+            this.Controls.Add(this.btnLn);
+            this.Controls.Add(this.btnOctal);
+            this.Controls.Add(this.btnHexaDecimal);
+            this.Controls.Add(this.btnBinary);
+            this.Controls.Add(this.btnDecimal);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnAnswer);
             this.Controls.Add(this.txtKQ);
@@ -512,6 +577,11 @@
         private System.Windows.Forms.Button btnAnswer;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Calculator_label;
+        private System.Windows.Forms.Button btnDecimal;
+        private System.Windows.Forms.Button btnBinary;
+        private System.Windows.Forms.Button btnHexaDecimal;
+        private System.Windows.Forms.Button btnOctal;
+        private System.Windows.Forms.Button btnLn;
     }
 }
 

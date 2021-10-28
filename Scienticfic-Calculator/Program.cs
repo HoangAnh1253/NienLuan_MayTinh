@@ -20,7 +20,7 @@ namespace Scienticfic_Calculator
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
             String str = "S2^2";
-            MessageBox.Show(v.ToString());
+            MessageBox.Show(Compute.convert_Decimal_to_AnotherNumberType(0.123,2));
             Application.Run(new Calculator());
         }
         

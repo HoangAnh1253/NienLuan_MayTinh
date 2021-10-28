@@ -13,6 +13,7 @@ namespace Scienticfic_Calculator
     public partial class Calculator : Form
     {
         public static Double kq = 0;
+        int baseNum;
         int countNgoacDon = 0;
         bool mouseDown;
         private Point offset;
@@ -86,6 +87,7 @@ namespace Scienticfic_Calculator
         private void btnEqual_Click(object sender, EventArgs e)
         {
             kq = Compute.compute(txtScreen.Text);
+            baseNum = 10;
             txtKQ.Text = kq.ToString();
         }
 
@@ -241,6 +243,10 @@ namespace Scienticfic_Calculator
             }
             return allow;
         }
-       
+
+        private void number_convert_click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

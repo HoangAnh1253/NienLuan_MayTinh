@@ -29,6 +29,19 @@ namespace Scienticfic_Calculator
             {
                 bieuThuc = bieuThuc.Replace("π", Math.PI.ToString());
             }
+
+            //Xu ly dau ^
+            while (bieuThuc.Contains("^"))
+            {
+                string veTrc = getBieuThucTruocViTri(bieuThuc, bieuThuc.IndexOf("^")),
+                       veSau = getBieuThucSauViTri(bieuThuc, bieuThuc.IndexOf("^"));
+                string tempStr = veTrc + "^" + veSau;
+                double numOfVeTrc = Convert.ToDouble(compute(veTrc)),
+                       numOfVeSau = Convert.ToDouble(compute(veSau));
+                bieuThuc = bieuThuc.Replace(tempStr, Math.Pow(numOfVeTrc, numOfVeSau).ToString());
+                Console.WriteLine(bieuThuc);
+            }
+
             //Xu ly dau !
             while (bieuThuc.Contains("!"))
             {
@@ -46,17 +59,7 @@ namespace Scienticfic_Calculator
                 }
 
             }
-            //Xu ly dau ^
-            while (bieuThuc.Contains("^"))
-            {
-                string veTrc = getBieuThucTruocViTri(bieuThuc, bieuThuc.IndexOf("^")),
-                       veSau = getBieuThucSauViTri(bieuThuc, bieuThuc.IndexOf("^"));
-                string tempStr = veTrc + "^" + veSau;
-                double numOfVeTrc = Convert.ToDouble(compute(veTrc)),
-                       numOfVeSau = Convert.ToDouble(compute(veSau));
-                bieuThuc = bieuThuc.Replace(tempStr, Math.Pow(numOfVeTrc, numOfVeSau).ToString());
-                Console.WriteLine(bieuThuc);
-            }
+           
          
             
             //Xu ly cac bieu thuc √, sin, cos, tan, cotan, logarit...
@@ -71,6 +74,8 @@ namespace Scienticfic_Calculator
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
                     else if(firstSymbol.Equals("log"))
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log10(compute(tempStr)).ToString());
+                    else if(firstSymbol.Equals("ln"))
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log(compute(tempStr)).ToString());
                     else if(firstSymbol.Equals("sin"))
                     {
                         double radians = toRadians(compute(tempStr));
@@ -128,13 +133,15 @@ namespace Scienticfic_Calculator
                 sinIndex = bieuThuc.IndexOf("sin"),
                 cosIndex = bieuThuc.IndexOf("cos"),
                 tanIndex = bieuThuc.IndexOf("tan"),
-                logIndex = bieuThuc.IndexOf("log");
+                logIndex = bieuThuc.IndexOf("log"),
+                lnIndex = bieuThuc.IndexOf("ln");
             List<int> indexList = new List<int>();
             indexList.Add(sqrtIndex);
             indexList.Add(sinIndex);
             indexList.Add(cosIndex);
             indexList.Add(tanIndex);
             indexList.Add(logIndex);
+            indexList.Add(lnIndex);
             
             for (int i = 0; i < indexList.Count; i++)
             {
@@ -157,6 +164,8 @@ namespace Scienticfic_Calculator
                 symbol = "tan";
             else if (indexList[0] == logIndex)
                 symbol = "log";
+            else if (indexList[0] == lnIndex)
+                symbol = "ln";
             return symbol;
         }
 
@@ -284,6 +293,61 @@ namespace Scienticfic_Calculator
         public static double toRadians(double number)
         {
             return (number * Math.PI) / 180;
+        }
+
+        public static string convert_Integer_to_AnotherNumberType(int number,int baseNum)
+        {
+            if (number == 0)
+                return "";
+            else
+            {
+                int remain = number % baseNum;
+                string remainStr = remain.ToString();
+                if(remain>=10)
+                {
+                    switch (remain)
+                    {
+                        case 10:
+                            remainStr = "A";
+                            break;
+                        case 11:
+                            remainStr = "B";
+                            break;
+                        case 12:
+                            remainStr = "C";
+                            break;
+                        case 13:
+                            remainStr = "D";
+                            break;
+                        case 14:
+                            remainStr = "E";
+                            break;
+                        case 15:
+                            remainStr = "F";
+                            break;
+                    }
+                }
+                return convert_Integer_to_AnotherNumberType(number / baseNum, baseNum) + remainStr;
+            }
+        }
+
+
+        public static string convert_Decimal_to_AnotherNumberType(double number, int baseNum)
+        {
+            string kq=".";
+            int maxlength = 15;
+            double x = number;
+            do
+            {
+                x = x * baseNum;
+                int y = (int) Math.Round(x - 0.5, MidpointRounding.AwayFromZero);
+                kq = kq + y.ToString();
+                x = x - y;
+                Console.WriteLine(x);
+            } while (x!=0 && kq.Length<maxlength);
+            if (kq.Length == maxlength)
+                kq = kq + "...";
+            return kq;
         }
     }
 }
