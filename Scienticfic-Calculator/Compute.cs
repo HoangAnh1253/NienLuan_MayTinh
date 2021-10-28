@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Text.RegularExpressions;
+using static Scienticfic_Calculator.Calculator;
 
 namespace Scienticfic_Calculator
 {
@@ -15,6 +16,19 @@ namespace Scienticfic_Calculator
             double kq = 0;
             DataTable dt = new DataTable();
             Object v;
+
+            //Xu ly ()
+
+            //Xu ly Ans
+            while(bieuThuc.Contains("Ans"))
+            {
+                bieuThuc = bieuThuc.Replace("Ans", Calculator.kq.ToString());
+            }
+            //xu ly PI
+            while(bieuThuc.Contains("π"))
+            {
+                bieuThuc = bieuThuc.Replace("π", Math.PI.ToString());
+            }
             //Xu ly dau !
             while (bieuThuc.Contains("!"))
             {
@@ -45,7 +59,7 @@ namespace Scienticfic_Calculator
             }
          
             
-            //Xu ly cac bieu thuc √, sin, logarit...
+            //Xu ly cac bieu thuc √, sin, cos, tan, cotan, logarit...
             String firstSymbol;
             do
             {
@@ -57,6 +71,22 @@ namespace Scienticfic_Calculator
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
                     else if(firstSymbol.Equals("log"))
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log10(compute(tempStr)).ToString());
+                    else if(firstSymbol.Equals("sin"))
+                    {
+                        double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sin(radians).ToString());
+                    }
+                    else if (firstSymbol.Equals("cos"))
+                    {
+                        double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Cos(radians).ToString());
+                    }
+                    else if (firstSymbol.Equals("tan"))
+                    {
+                        double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Tan(radians).ToString());
+                    }
+
                 }
             } while (!firstSymbol.Equals(""));
 
@@ -95,12 +125,17 @@ namespace Scienticfic_Calculator
         {
             string symbol="";
             int sqrtIndex = bieuThuc.IndexOf("√"),
-                sinIndex = bieuThuc.IndexOf("Sin"),
+                sinIndex = bieuThuc.IndexOf("sin"),
+                cosIndex = bieuThuc.IndexOf("cos"),
+                tanIndex = bieuThuc.IndexOf("tan"),
                 logIndex = bieuThuc.IndexOf("log");
             List<int> indexList = new List<int>();
             indexList.Add(sqrtIndex);
             indexList.Add(sinIndex);
+            indexList.Add(cosIndex);
+            indexList.Add(tanIndex);
             indexList.Add(logIndex);
+            
             for (int i = 0; i < indexList.Count; i++)
             {
                 if (indexList[i] < 0)
@@ -115,7 +150,11 @@ namespace Scienticfic_Calculator
             if (indexList[0] == sqrtIndex)
                 symbol = "√";
             else if (indexList[0] == sinIndex)
-                symbol = "Sin";
+                symbol = "sin";
+            else if (indexList[0] == cosIndex)
+                symbol = "cos";
+            else if (indexList[0] == tanIndex)
+                symbol = "tan";
             else if (indexList[0] == logIndex)
                 symbol = "log";
             return symbol;
@@ -226,7 +265,7 @@ namespace Scienticfic_Calculator
 
         public static double factorial(int number)
         {
-            if (number == 1)
+            if (number == 1 || number == 0)
                 return 1;
             else
                 return number * factorial(number - 1);
@@ -240,6 +279,11 @@ namespace Scienticfic_Calculator
                 isInteger = true;
             }
             return isInteger;
+        }
+
+        public static double toRadians(double number)
+        {
+            return (number * Math.PI) / 180;
         }
     }
 }

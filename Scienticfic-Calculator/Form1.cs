@@ -12,17 +12,40 @@ namespace Scienticfic_Calculator
 {
     public partial class Calculator : Form
     {
-        Double kq = 0;
+        public static Double kq = 0;
         int countNgoacDon = 0;
+        bool mouseDown;
+        private Point offset;
         public Calculator()
         {
             InitializeComponent();
         }
 
+        private void moustDown_Event(object sender, MouseEventArgs e)
+        {
+            offset.X = e.X;
+            offset.Y = e.Y;
+            mouseDown = true;
+        }
+
+        private void mouseMove_Event(object sender, MouseEventArgs e)
+        {
+            if(mouseDown == true)
+            {
+                Point currentPosition = PointToScreen(e.Location);
+                Location = new Point(currentPosition.X - offset.X, currentPosition.Y - offset.Y);
+            }
+        }
+
+        private void mouseUp_Event(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
         private void Operator_click(object sender, EventArgs e)//one of (+,-,x,÷) buttons is clicked
         {
             Button opt = (Button)sender;
-            if(!txtScreen.Text.EndsWith(" "))
+            if(canEnterOperator())
             {
                 if(opt.Text.Equals("x"))
                     txtScreen.Text = txtScreen.Text + " * ";
@@ -46,24 +69,30 @@ namespace Scienticfic_Calculator
                 txtScreen.Text = "";
 
             Button number = (Button)sender;
-            if (number.Text == ".")
+            if(canEnterNumber())
             {
-                if (!txtScreen.Text.Contains("."))
-                    txtScreen.Text = txtScreen.Text + number.Text;
-            }
-            else
+                if(number.Text.Equals("."))
+                {
+                    if (txtScreen.Text == "" || !Compute.getBieuThucTruocViTri(txtScreen.Text, txtScreen.Text.Length).Contains("."))
+                    {
+                        txtScreen.Text = txtScreen.Text + number.Text;
+                    }  
+                    return;
+                }
                 txtScreen.Text = txtScreen.Text + number.Text;
+            }
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
             kq = Compute.compute(txtScreen.Text);
-            txtScreen.Text = kq.ToString();
+            txtKQ.Text = kq.ToString();
         }
 
         private void btnAC_click(object sender, EventArgs e)
         {
             txtScreen.Text = "0";
+            txtKQ.Text = "";
         }
 
         private void btnDel_click(object sender, EventArgs e)
@@ -72,7 +101,10 @@ namespace Scienticfic_Calculator
             {
                 if (txtScreen.Text.EndsWith(" "))
                 {
-                    txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 3, 3);
+                    if(txtScreen.Text.Length == 1)
+                        txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 1, 1);
+                    else
+                        txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 3, 3);
                 }
                 else
                     txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 1, 1);
@@ -82,15 +114,16 @@ namespace Scienticfic_Calculator
         }
 
         private void btnSqrt_Click(object sender, EventArgs e)
-        {
-            
-            countNgoacDon++;
-            if (txtScreen.Text.EndsWith(" ")||txtScreen.Text=="" || txtScreen.Text.EndsWith("^") || txtScreen.Text.EndsWith("("))
-            {
-                txtScreen.Text = txtScreen.Text + " √(";
-            }else if(txtScreen.Text.Equals("0"))
+        {   
+            if(txtScreen.Text.Equals("0"))
             {
                 txtScreen.Text = " √(";
+                countNgoacDon++;
+            }
+            else if (canEnterFunction())
+            {
+                txtScreen.Text = txtScreen.Text + " √(";
+                countNgoacDon++;
             }
         }
 
@@ -98,10 +131,11 @@ namespace Scienticfic_Calculator
         {
             if (txtScreen.Text == "0")
                 txtScreen.Text = "";
-            countNgoacDon++;
-            if (txtScreen.Text.EndsWith(" ") || txtScreen.Text == "" || txtScreen.Text == "0")
+            
+            if (canEnterNumber())
             {
                 txtScreen.Text = txtScreen.Text + "(";
+                countNgoacDon++;
             }
         }
 
@@ -117,7 +151,7 @@ namespace Scienticfic_Calculator
         private void btnPow_Click(object sender, EventArgs e)
         {
          
-            if ((txtScreen.Text.EndsWith(")") || !txtScreen.Text.EndsWith(" "))&&!txtScreen.Text.EndsWith("(")&& !txtScreen.Text.Equals("") && ! txtScreen.Text.EndsWith("^"))
+            if (canEnterOperator())
             {
                 txtScreen.Text = txtScreen.Text + "^";
             }
@@ -125,24 +159,88 @@ namespace Scienticfic_Calculator
 
         private void btnGiaiThua_Click(object sender, EventArgs e)
         {
-           
-            if ((txtScreen.Text.EndsWith(")") || !txtScreen.Text.EndsWith(" ")) && !txtScreen.Text.EndsWith("(") && !txtScreen.Text.Equals("") && !txtScreen.Text.EndsWith("^"))
+            //(txtScreen.Text.EndsWith(")") || !txtScreen.Text.EndsWith(" ")) && !txtScreen.Text.EndsWith("(") && !txtScreen.Text.Equals("") && !txtScreen.Text.EndsWith("^")
+            if (canEnterOperator())
             {
                 txtScreen.Text = txtScreen.Text + "!";
             }
         }
 
-        private void btnLogarit_Click(object sender, EventArgs e)
+       
+
+        private void math_function_clicked(object sender, EventArgs e)
         {
-            countNgoacDon++;
-            if (txtScreen.Text.EndsWith(" ") || txtScreen.Text == "" || txtScreen.Text.EndsWith("^") || txtScreen.Text.EndsWith("("))
+            Button opt = (Button)sender;
+            
+            //txtScreen.Text.EndsWith(" ") || txtScreen.Text == "" || txtScreen.Text.EndsWith("^") || txtScreen.Text.EndsWith("(")
+            if (canEnterFunction())
             {
-                txtScreen.Text = txtScreen.Text + " log(";
+                txtScreen.Text = txtScreen.Text + " " + opt.Text + "(";
+                countNgoacDon++;
             }
             else if (txtScreen.Text.Equals("0"))
             {
-                txtScreen.Text = " log(";
+                txtScreen.Text = " " + opt.Text + "(";
+                countNgoacDon++;
             }
         }
+
+        private void btnPi_Click(object sender, EventArgs e)
+        {
+            if (canEnterFunction())
+            {
+                txtScreen.Text = txtScreen.Text + "π";
+            }
+            else if (txtScreen.Text.Equals("0"))
+            {
+                txtScreen.Text = "π";
+            }
+
+        }
+
+        private void btnAnswer_Click(object sender, EventArgs e)
+        {
+            if (canEnterFunction())
+            {
+                txtScreen.Text = txtScreen.Text + "Ans";
+            }
+            else if (txtScreen.Text.Equals("0"))
+            {
+                txtScreen.Text = "Ans";
+            }
+        }
+
+        public  bool canEnterNumber()
+        {
+            bool allow = false;
+            if ((!txtScreen.Text.EndsWith(")") && !txtScreen.Text.EndsWith("!")) || txtScreen.Text.EndsWith("."))
+            {
+                allow = true;
+            }
+            return allow;
+        }
+
+        public bool canEnterOperator()
+        {
+            bool allow = true;
+            if (txtScreen.Text.EndsWith(" ") || txtScreen.Text.EndsWith("(") || txtScreen.Text.EndsWith(".") || txtScreen.Text.EndsWith("^"))
+            {
+                allow = false;
+            }
+            else if (txtScreen.Text.EndsWith(")"))
+                allow = true;
+            return allow;
+        }
+
+        public bool canEnterFunction()
+        {
+            bool allow = false;
+            if(!canEnterOperator())
+            {
+                allow = true;
+            }
+            return allow;
+        }
+       
     }
 }

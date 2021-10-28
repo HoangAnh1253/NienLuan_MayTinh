@@ -20,7 +20,6 @@ namespace Scienticfic_Calculator
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
             String str = "S2^2";
-            MessageBox.Show(Compute.compute("log(100)").ToString());
             MessageBox.Show(v.ToString());
             Application.Run(new Calculator());
         }
