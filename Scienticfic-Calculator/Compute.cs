@@ -295,6 +295,7 @@ namespace Scienticfic_Calculator
             return (number * Math.PI) / 180;
         }
 
+        //Start: chuyen tu thap phan sang dang so khac
         public static string convert_Integer_to_AnotherNumberType(int number,int baseNum)
         {
             if (number == 0)
@@ -332,7 +333,7 @@ namespace Scienticfic_Calculator
         }
 
 
-        public static string convert_Decimal_to_AnotherNumberType(double number, int baseNum)
+        public static string convert_Decimal_Part_to_AnotherNumberType(double number, int baseNum)
         {
             string kq=".";
             int maxlength = 15;
@@ -341,7 +342,32 @@ namespace Scienticfic_Calculator
             {
                 x = x * baseNum;
                 int y = (int) Math.Round(x - 0.5, MidpointRounding.AwayFromZero);
-                kq = kq + y.ToString();
+                if(y>9)
+                {
+                    switch (y)
+                    {
+                        case 10:
+                            kq = kq + "A";
+                            break;
+                        case 11:
+                            kq = kq + "B";
+                            break;
+                        case 12:
+                            kq = kq + "C";
+                            break;
+                        case 13:
+                            kq = kq + "D";
+                            break;
+                        case 14:
+                            kq = kq + "E";
+                            break;
+                        case 15:
+                            kq = kq + "F";
+                            break;
+                    }
+                }
+                else
+                    kq = kq + y.ToString();
                 x = x - y;
                 Console.WriteLine(x);
             } while (x!=0 && kq.Length<maxlength);
@@ -349,5 +375,111 @@ namespace Scienticfic_Calculator
                 kq = kq + "...";
             return kq;
         }
+
+        public static string convert_Decimal_to_AnotherNumberType(double number, int baseNum)
+        {
+            string kq = "";
+            double decimalPart = number - Math.Round(number - 0.5, MidpointRounding.AwayFromZero);
+            kq = kq + convert_Integer_to_AnotherNumberType((int)number, baseNum);
+            if (decimalPart != 0)
+            {
+                kq = kq + convert_Decimal_Part_to_AnotherNumberType(decimalPart, baseNum);        
+            }
+            return kq;
+        }
+        //End: Chuyen tu thap phan sang dang so khac
+
+        //Start: chuyen tu dang so khac ve dang thap phan
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
+        public static double convert_AnotherNumberType_PhanNguyen_to_Decimal(string numberStr,int baseNum)
+        {
+            double kq=0;
+            numberStr = Reverse(numberStr);
+            for(int i = 0;i<numberStr.Length;i++)
+            {
+                string digitStr = numberStr[i].ToString();
+                int digitNum=0;
+                try
+                {
+                    digitNum = Convert.ToInt32(digitStr);
+                }catch(FormatException e)
+                {
+                    switch (digitStr)
+                    {
+                        case "A":
+                            digitNum = 10;
+                            break;
+                        case "B":
+                            digitNum = 11;
+                            break;
+                        case "C":
+                            digitNum = 12;
+                            break;
+                        case "D":
+                            digitNum = 13;
+                            break;
+                        case "E":
+                            digitNum = 14;
+                            break;
+                        case "F":
+                            digitNum = 15;
+                            break;
+                    }
+                }
+                kq = kq + Math.Pow(baseNum, i) * digitNum;
+            }
+            return kq;
+        }
+
+        public static double convert_AnotherNumberType_PhanThapPhan_to_Decimal(string numberStr, int baseNum)//numStr co dinh dang la: VD ".111011"
+        {
+            double kq = 0;
+            for (int i = 1; i < numberStr.Length; i++)
+            {
+                string digitStr = numberStr[i].ToString();
+                int digitNum = 0;
+                try
+                {
+                    digitNum = Convert.ToInt32(digitStr);
+                }
+                catch (FormatException e)
+                {
+                    switch (digitStr)
+                    {
+                        case "A":
+                            digitNum = 10;
+                            break;
+                        case "B":
+                            digitNum = 11;
+                            break;
+                        case "C":
+                            digitNum = 12;
+                            break;
+                        case "D":
+                            digitNum = 13;
+                            break;
+                        case "E":
+                            digitNum = 14;
+                            break;
+                        case "F":
+                            digitNum = 15;
+                            break;
+                    }
+                }
+                kq = kq + Math.Pow(baseNum, -i) * digitNum;
+            }
+            return kq;
+        }
+        //End: Chuyen tu dang so khac ve so thap phan
+
+        //Start: chuyen tu dang so nay sang dang so khac
+        
+        //End: chuyen tu dang so nay sang dang so khac
+
     }
 }

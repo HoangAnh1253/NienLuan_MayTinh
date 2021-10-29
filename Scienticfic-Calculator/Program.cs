@@ -19,8 +19,8 @@ namespace Scienticfic_Calculator
             Application.SetCompatibleTextRenderingDefault(false);
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
-            String str = "S2^2";
-            MessageBox.Show(Compute.convert_Decimal_to_AnotherNumberType(0.123,2));
+            String str = "123456.78910";
+            MessageBox.Show(Compute.convert_AnotherNumberType_PhanThapPhan_to_Decimal(".7654", 8).ToString());
             Application.Run(new Calculator());
         }
         
