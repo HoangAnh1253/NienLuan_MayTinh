@@ -24,8 +24,15 @@ namespace Scienticfic_Calculator
             {
                 bieuThuc = bieuThuc.Replace("Ans", Calculator.kq.ToString());
             }
-            //xu ly PI
-            while(bieuThuc.Contains("π"))
+
+            //xu ly const e
+            while (bieuThuc.Contains("e"))
+            {
+                bieuThuc = bieuThuc.Replace("e", Math.E.ToString());
+            }
+
+            //xu ly const PI
+            while (bieuThuc.Contains("π"))
             {
                 bieuThuc = bieuThuc.Replace("π", Math.PI.ToString());
             }
@@ -72,24 +79,39 @@ namespace Scienticfic_Calculator
                     string tempStr = getBieuThucOf(bieuThuc, firstSymbol);
                     if(firstSymbol.Equals("√"))
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sqrt(compute(tempStr)).ToString());
-                    else if(firstSymbol.Equals("log"))
+                    else if(firstSymbol.Equals("Log"))
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log10(compute(tempStr)).ToString());
-                    else if(firstSymbol.Equals("ln"))
+                    else if(firstSymbol.Equals("Ln"))
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Log(compute(tempStr)).ToString());
-                    else if(firstSymbol.Equals("sin"))
+                    else if(firstSymbol.Equals("Sin"))
                     {
                         double radians = toRadians(compute(tempStr));
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sin(radians).ToString());
                     }
-                    else if (firstSymbol.Equals("cos"))
+                    else if (firstSymbol.Equals("Cos"))
                     {
                         double radians = toRadians(compute(tempStr));
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Cos(radians).ToString());
                     }
-                    else if (firstSymbol.Equals("tan"))
+                    else if (firstSymbol.Equals("Tan"))
                     {
                         double radians = toRadians(compute(tempStr));
                         bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Tan(radians).ToString());
+                    }
+                    else if (firstSymbol.Equals("Sinh"))
+                    {
+                       double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Sinh(radians).ToString());
+                    }
+                    else if (firstSymbol.Equals("Cosh"))
+                    {
+                        double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Cosh(radians).ToString());
+                    }
+                    else if (firstSymbol.Equals("Tanh"))
+                    {
+                        double radians = toRadians(compute(tempStr));
+                        bieuThuc = bieuThuc.Replace(firstSymbol + tempStr, Math.Tanh(radians).ToString());
                     }
 
                 }
@@ -130,11 +152,20 @@ namespace Scienticfic_Calculator
         {
             string symbol="";
             int sqrtIndex = bieuThuc.IndexOf("√"),
-                sinIndex = bieuThuc.IndexOf("sin"),
-                cosIndex = bieuThuc.IndexOf("cos"),
-                tanIndex = bieuThuc.IndexOf("tan"),
-                logIndex = bieuThuc.IndexOf("log"),
-                lnIndex = bieuThuc.IndexOf("ln");
+                sinIndex = bieuThuc.IndexOf("Sin"),
+                cosIndex = bieuThuc.IndexOf("Cos"),
+                tanIndex = bieuThuc.IndexOf("Tan"),
+                logIndex = bieuThuc.IndexOf("Log"),
+                lnIndex = bieuThuc.IndexOf("Ln"),
+                sinhIndex = bieuThuc.IndexOf("Sinh"),
+                coshIndex = bieuThuc.IndexOf("Cosh"),
+                tanhIndex = bieuThuc.IndexOf("Tanh");
+            if (sinIndex == sinhIndex)
+                sinIndex = -1;
+            if (cosIndex == coshIndex)
+                cosIndex = -1;
+            if (tanIndex == tanhIndex)
+                tanIndex = -1;
             List<int> indexList = new List<int>();
             indexList.Add(sqrtIndex);
             indexList.Add(sinIndex);
@@ -142,7 +173,10 @@ namespace Scienticfic_Calculator
             indexList.Add(tanIndex);
             indexList.Add(logIndex);
             indexList.Add(lnIndex);
-            
+            indexList.Add(sinhIndex);
+            indexList.Add(coshIndex);
+            indexList.Add(tanhIndex);
+
             for (int i = 0; i < indexList.Count; i++)
             {
                 if (indexList[i] < 0)
@@ -157,15 +191,21 @@ namespace Scienticfic_Calculator
             if (indexList[0] == sqrtIndex)
                 symbol = "√";
             else if (indexList[0] == sinIndex)
-                symbol = "sin";
+                symbol = "Sin";
             else if (indexList[0] == cosIndex)
-                symbol = "cos";
+                symbol = "Cos";
             else if (indexList[0] == tanIndex)
-                symbol = "tan";
+                symbol = "Tan";
             else if (indexList[0] == logIndex)
-                symbol = "log";
+                symbol = "Log";
             else if (indexList[0] == lnIndex)
-                symbol = "ln";
+                symbol = "Ln";
+            else if (indexList[0] == sinhIndex)
+                symbol = "Sinh";
+            else if (indexList[0] == coshIndex)
+                symbol = "Cosh";
+            else if (indexList[0] == tanhIndex)
+                symbol = "Tanh";
             return symbol;
         }
 

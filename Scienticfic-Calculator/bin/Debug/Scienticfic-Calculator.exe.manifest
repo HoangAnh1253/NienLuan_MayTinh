@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Scienticfic-Calculator.exe" size="29144">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Scienticfic-Calculator.exe" size="31704">
       <assemblyIdentity name="Scienticfic-Calculator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2V12UUlJvOvoUJqibuLLVJBEoQb2M1uDAW5cptqrPME=</dsig:DigestValue>
+        <dsig:DigestValue>62VxiHMNLbHncPmxUum5gOCstOlgOLF1rbK9DsoxWe0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -19,10 +19,9 @@ namespace Scienticfic_Calculator
             Application.SetCompatibleTextRenderingDefault(false);
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
-            String str = "123456.78910";
-            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16, 10));
-            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16,2));
-            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16, 8));
+            String str = "Sinh";
+            MessageBox.Show(Compute.compute("Sin(-3)").ToString());
+            MessageBox.Show(str.IndexOf("Sinh").ToString());
             Application.Run(new Calculator());
         }
         

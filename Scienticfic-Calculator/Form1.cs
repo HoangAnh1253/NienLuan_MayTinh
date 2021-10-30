@@ -45,16 +45,25 @@ namespace Scienticfic_Calculator
 
         private void Operator_click(object sender, EventArgs e)//one of (+,-,x,÷) buttons is clicked
         {
-            Button opt = (Button)sender;
-            if(canEnterOperator())
+            Button btn = (Button)sender;
+            if (txtScreen.Text.Equals("") || txtScreen.Text.Equals("0"))
+                txtScreen.Text = " " + btn.Text + " ";
+            else if (canEnterOperator())
             {
-                if(opt.Text.Equals("x"))
+                if(btn.Text.Equals("x"))
                     txtScreen.Text = txtScreen.Text + " * ";
-                else if(opt.Text.Equals("÷"))
+                else if(btn.Text.Equals("÷"))
                     txtScreen.Text = txtScreen.Text + " / ";
                 else
-                    txtScreen.Text = txtScreen.Text + " " + opt.Text + " ";
+                    txtScreen.Text = txtScreen.Text + " " + btn.Text + " ";
             }
+            else if(btn.Text.Equals("+") || btn.Text.Equals("-"))//Truong hop nhap dau "+", "-" lien tiep nhau hoac dau duong, am
+            {
+                if(txtScreen.Text.Substring(txtScreen.Text.Length-2,1).Equals("+") || txtScreen.Text.Substring(txtScreen.Text.Length - 2, 1).Equals("-") || txtScreen.Text.EndsWith("("))
+                    txtScreen.Text = txtScreen.Text + " " + btn.Text + " ";
+            }
+           
+
         }
 
        
@@ -109,7 +118,15 @@ namespace Scienticfic_Calculator
                         txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 3, 3);
                 }
                 else
+                {
+                    if (txtScreen.Text.EndsWith(")"))
+                        countNgoacDon++;
+                    else if (txtScreen.Text.EndsWith("("))
+                        countNgoacDon--;
                     txtScreen.Text = txtScreen.Text.Remove(txtScreen.Text.Length - 1, 1);
+                    
+                }
+                    
             }
             if (txtScreen.Text == "")
                 txtScreen.Text = "0";
@@ -134,7 +151,7 @@ namespace Scienticfic_Calculator
             if (txtScreen.Text == "0")
                 txtScreen.Text = "";
             
-            if (canEnterNumber())
+            if (canEnterFunction())
             {
                 txtScreen.Text = txtScreen.Text + "(";
                 countNgoacDon++;
@@ -189,14 +206,6 @@ namespace Scienticfic_Calculator
 
         private void btnPi_Click(object sender, EventArgs e)
         {
-            if (canEnterFunction())
-            {
-                txtScreen.Text = txtScreen.Text + "π";
-            }
-            else if (txtScreen.Text.Equals("0"))
-            {
-                txtScreen.Text = "π";
-            }
 
         }
 
@@ -237,7 +246,7 @@ namespace Scienticfic_Calculator
         public bool canEnterFunction()
         {
             bool allow = false;
-            if(!canEnterOperator())
+            if(!canEnterOperator() && !txtScreen.Text.EndsWith("."))
             {
                 allow = true;
             }
@@ -246,6 +255,8 @@ namespace Scienticfic_Calculator
 
         private void number_convert_click(object sender, EventArgs e)
         {
+            if (txtKQ.Text == "")
+                return;
             Button btn = (Button) sender;
             int newBaseNum = 0;
             if(btn.Text.Equals("Dec"))
@@ -285,6 +296,19 @@ namespace Scienticfic_Calculator
         private void buttonClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void const_num_click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            if (canEnterFunction())
+            {
+                txtScreen.Text = txtScreen.Text + btn.Text;
+            }
+            else if (txtScreen.Text.Equals("0"))
+            {
+                txtScreen.Text = btn.Text;
+            }
         }
     }
 }
