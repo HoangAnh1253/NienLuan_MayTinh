@@ -246,7 +246,45 @@ namespace Scienticfic_Calculator
 
         private void number_convert_click(object sender, EventArgs e)
         {
+            Button btn = (Button) sender;
+            int newBaseNum = 0;
+            if(btn.Text.Equals("Dec"))
+            {
+                newBaseNum = 10;
+            }
+            else if(btn.Text.Equals("Bin"))
+            {
+                newBaseNum = 2;
+            }
+            else if(btn.Text.Equals("Hex"))
+            {
+                newBaseNum = 16;
+            }
+            else if(btn.Text.Equals("Oct"))
+            {
+                newBaseNum = 8;
+            }
 
+            if(baseNum == newBaseNum)
+            {
+                return;
+            }
+            else
+            {
+                txtKQ.Text = Compute.convert_ThisNumType_to_AnotherNumtype(txtKQ.Text, baseNum, newBaseNum);
+                baseNum = newBaseNum;
+            }
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -8,3 +8,7 @@ C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Deb
 C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Debug\Scienticfic-Calculator.exe
 C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Debug\Scienticfic-Calculator.pdb
 C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Debug\Scienticfic_Calculator.Calculator.resources
+C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\bin\Debug\Scienticfic-Calculator.exe.manifest
+C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\bin\Debug\Scienticfic-Calculator.application
+C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Debug\Scienticfic-Calculator.exe.manifest
+C:\Users\DELL\source\repos\Scienticfic-Calculator\Scienticfic-Calculator\obj\Debug\Scienticfic-Calculator.application

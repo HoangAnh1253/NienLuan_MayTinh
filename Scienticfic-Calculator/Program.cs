@@ -20,7 +20,9 @@ namespace Scienticfic_Calculator
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
             String str = "123456.78910";
-            MessageBox.Show(Compute.convert_AnotherNumberType_PhanThapPhan_to_Decimal(".7654", 8).ToString());
+            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16, 10));
+            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16,2));
+            MessageBox.Show(Compute.convert_ThisNumType_to_AnotherNumtype("123AB.CD", 16, 8));
             Application.Run(new Calculator());
         }
         

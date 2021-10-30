@@ -475,10 +475,39 @@ namespace Scienticfic_Calculator
             }
             return kq;
         }
+
+        public static double convert_AnotherNumberType_to_Decimal(string numStr, int baseNum)
+        {
+            double kq = 0;
+            string phanNguyen = numStr.Substring(0,numStr.IndexOf(".")),
+                   phanThapPhan = numStr.Substring(numStr.IndexOf("."),numStr.Length-phanNguyen.Length);
+            kq += convert_AnotherNumberType_PhanNguyen_to_Decimal(phanNguyen,baseNum) + convert_AnotherNumberType_PhanThapPhan_to_Decimal(phanThapPhan,baseNum);
+            return kq;
+        }
         //End: Chuyen tu dang so khac ve so thap phan
 
         //Start: chuyen tu dang so nay sang dang so khac
-        
+        public static string convert_ThisNumType_to_AnotherNumtype(string number, int typeA, int typeB)
+        {
+            while(number.EndsWith("."))
+            {
+                number = number.Substring(0, number.Length - 1);
+            }
+            string kq = "";
+            if(typeA == 10)
+            {
+                kq = convert_Decimal_to_AnotherNumberType(Convert.ToDouble(number), typeB);
+            }
+            else if(typeB == 10){
+                kq = convert_AnotherNumberType_to_Decimal(number, typeA).ToString();
+            }
+            else
+            {
+                double decimalType = convert_AnotherNumberType_to_Decimal(number, typeA);
+                kq = convert_Decimal_to_AnotherNumberType(decimalType,typeB);
+            }
+            return kq;
+        }
         //End: chuyen tu dang so nay sang dang so khac
 
     }
