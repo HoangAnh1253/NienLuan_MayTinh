@@ -20,7 +20,7 @@ namespace Scienticfic_Calculator
             DataTable dt = new DataTable();
             object v = dt.Compute("2*2", "");
             String str = "Sinh";
-            MessageBox.Show(Compute.compute("Sin(-3)").ToString());
+            MessageBox.Show(Compute.convert_Decimal_to_AnotherNumberType(3,8).ToString());
             MessageBox.Show(str.IndexOf("Sinh").ToString());
             Application.Run(new Calculator());
         }

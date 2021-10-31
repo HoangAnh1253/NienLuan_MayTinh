@@ -13,6 +13,7 @@ namespace Scienticfic_Calculator
     public partial class Calculator : Form
     {
         public static Double kq = 0;
+        string kqStr;
         int baseNum;
         int countNgoacDon = 0;
         bool mouseDown;
@@ -98,6 +99,7 @@ namespace Scienticfic_Calculator
             kq = Compute.compute(txtScreen.Text);
             baseNum = 10;
             txtKQ.Text = kq.ToString();
+            kqStr = kq.ToString();
         }
 
         private void btnAC_click(object sender, EventArgs e)
@@ -255,6 +257,7 @@ namespace Scienticfic_Calculator
 
         private void number_convert_click(object sender, EventArgs e)
         {
+            
             if (txtKQ.Text == "")
                 return;
             Button btn = (Button) sender;
@@ -282,7 +285,18 @@ namespace Scienticfic_Calculator
             }
             else
             {
+                bool isNegative = kq < 0 ? true : false;
+                if(isNegative)
+                {
+                    txtKQ.Text = txtKQ.Text.Remove(0, 1);
+                }
                 txtKQ.Text = Compute.convert_ThisNumType_to_AnotherNumtype(txtKQ.Text, baseNum, newBaseNum);
+          
+               
+                if (isNegative)
+                {
+                    txtKQ.Text = txtKQ.Text.Insert(0, "-");
+                }
                 baseNum = newBaseNum;
             }
 

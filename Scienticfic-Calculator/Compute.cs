@@ -376,7 +376,7 @@ namespace Scienticfic_Calculator
         public static string convert_Decimal_Part_to_AnotherNumberType(double number, int baseNum)
         {
             string kq=".";
-            int maxlength = 15;
+            int maxlength = 100;
             double x = number;
             do
             {
@@ -519,9 +519,15 @@ namespace Scienticfic_Calculator
         public static double convert_AnotherNumberType_to_Decimal(string numStr, int baseNum)
         {
             double kq = 0;
-            string phanNguyen = numStr.Substring(0,numStr.IndexOf(".")),
-                   phanThapPhan = numStr.Substring(numStr.IndexOf("."),numStr.Length-phanNguyen.Length);
-            kq += convert_AnotherNumberType_PhanNguyen_to_Decimal(phanNguyen,baseNum) + convert_AnotherNumberType_PhanThapPhan_to_Decimal(phanThapPhan,baseNum);
+           if(numStr.Contains("."))
+            {
+                string phanNguyen = numStr.Substring(0, numStr.IndexOf(".")),
+                  phanThapPhan = numStr.Substring(numStr.IndexOf("."), numStr.Length - phanNguyen.Length);
+                kq += convert_AnotherNumberType_PhanNguyen_to_Decimal(phanNguyen, baseNum) + convert_AnotherNumberType_PhanThapPhan_to_Decimal(phanThapPhan, baseNum);
+            }else
+            {
+                kq += convert_AnotherNumberType_PhanNguyen_to_Decimal(numStr,baseNum);
+            }
             return kq;
         }
         //End: Chuyen tu dang so khac ve so thap phan
